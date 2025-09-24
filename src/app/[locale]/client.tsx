@@ -2,7 +2,10 @@
 
 import React, { useState, useMemo, useCallback } from "react";
 import { Tabs, TabsProps, Typography } from "antd";
-import { FileMarkdownOutlined, QuestionCircleOutlined } from "@ant-design/icons";
+import {
+  FileMarkdownOutlined,
+  QuestionCircleOutlined,
+} from "@ant-design/icons";
 import TranslationSettings from "@/app/components/TranslationSettings";
 import MDTranslator from "./MDTranslator";
 import { useTranslations, useLocale } from "next-intl";
@@ -16,7 +19,10 @@ const ClientPage = () => {
   const isChineseLocale = locale === "zh" || locale === "zh-hant";
 
   const userGuideUrl = useMemo(
-    () => (isChineseLocale ? "https://docs.newzone.top/guide/translation/md-translator/index.html" : "https://docs.newzone.top/en/guide/translation/md-translator/index.html"),
+    () =>
+      isChineseLocale
+        ? "https://docs.newzone.top/guide/translation/md-translator/index.html"
+        : "https://docs.newzone.top/en/guide/translation/md-translator/index.html",
     [isChineseLocale]
   );
   // 使用时间戳来强制重新渲染
@@ -48,7 +54,10 @@ const ClientPage = () => {
       <Title level={3}>
         <FileMarkdownOutlined /> {tMarkdown("clientTitle")}
       </Title>
-      <Paragraph type="secondary" ellipsis={{ rows: 3, expandable: true, symbol: "more" }}>
+      <Paragraph
+        type="secondary"
+        ellipsis={{ rows: 3, expandable: true, symbol: "more" }}
+      >
         <Link href={userGuideUrl} target="_blank" rel="noopener noreferrer">
           <QuestionCircleOutlined /> {t("userGuide")}
         </Link>{" "}

@@ -29,8 +29,22 @@ import { useLocale } from "next-intl";
 // 排除当前项目 "md-translator",
 const projectCategories = {
   translate: ["json-translate", "subtitle-translator", "aishort-translate"],
-  textParser: ["text-splitter", "chinese-conversion", "novel-processor", "regex-matcher", "text-processor"],
-  jsonParser: ["json-value-extractor", "json-node-edit", "json-value-transformer", "json-value-swapper", "json-node-inserter", "json-sort-classify", "json-match-update"],
+  textParser: [
+    "text-splitter",
+    "chinese-conversion",
+    "novel-processor",
+    "regex-matcher",
+    "text-processor",
+  ],
+  jsonParser: [
+    "json-value-extractor",
+    "json-node-edit",
+    "json-value-transformer",
+    "json-value-swapper",
+    "json-node-inserter",
+    "json-sort-classify",
+    "json-match-update",
+  ],
   dataParser: ["data-parser/flare", "data-parser/img-prompt"],
 };
 
@@ -166,7 +180,13 @@ export const AppMenu = () => {
       return null;
     }
     return {
-      label: <Link href={`https://tools.newzone.top/${locale}/${project.key}`}>{project.onlyzh && locale === "zh" ? project.titleKey : t(project.titleKey)}</Link>,
+      label: (
+        <Link href={`https://tools.newzone.top/${locale}/${project.key}`}>
+          {project.onlyzh && locale === "zh"
+            ? project.titleKey
+            : t(project.titleKey)}
+        </Link>
+      ),
       key: project.key,
       icon: project.icon,
     };
@@ -179,7 +199,15 @@ export const AppMenu = () => {
   const otherToolsItems = [
     {
       label: (
-        <a href={isChineseLocale ? "https://www.aishort.top/" : `https://www.aishort.top/${locale}`} target="_blank" rel="noopener noreferrer">
+        <a
+          href={
+            isChineseLocale
+              ? "https://www.aishort.top/"
+              : `https://www.aishort.top/${locale}`
+          }
+          target="_blank"
+          rel="noopener noreferrer"
+        >
           ChatGPT Shortcut
         </a>
       ),
@@ -188,7 +216,11 @@ export const AppMenu = () => {
     },
     {
       label: (
-        <a href={`https://prompt.newzone.top/app/${locale}`} target="_blank" rel="noopener noreferrer">
+        <a
+          href={`https://prompt.newzone.top/app/${locale}`}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
           IMGPrompt
         </a>
       ),
@@ -196,18 +228,6 @@ export const AppMenu = () => {
       icon: <BgColorsOutlined />,
     },
   ];
-
-  if (isChineseLocale) {
-    otherToolsItems.push({
-      label: (
-        <a href="https://newzone.top/" target="_blank" rel="noopener noreferrer">
-          LearnData 开源笔记
-        </a>
-      ),
-      key: "LearnData",
-      icon: <BookOutlined />,
-    });
-  }
 
   const menuItems = [
     {
@@ -245,7 +265,11 @@ export const AppMenu = () => {
       children: otherToolsItems,
     },
     {
-      label: <Link href={`https://tools.newzone.top/${locale}/feedback`}>{t("feedback.feedback1")}</Link>,
+      label: (
+        <Link href={`https://tools.newzone.top/${locale}/feedback`}>
+          {t("feedback.feedback1")}
+        </Link>
+      ),
       key: "feedback",
     },
   ];

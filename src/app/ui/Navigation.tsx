@@ -1,9 +1,26 @@
 "use client";
 import React, { useState, useEffect, useMemo } from "react";
 import { usePathname, useRouter } from "next/navigation";
-import { Layout, Menu, Space, ConfigProvider, theme as antTheme, Button, Dropdown, Input } from "antd";
+import {
+  Layout,
+  Menu,
+  Space,
+  ConfigProvider,
+  theme as antTheme,
+  Button,
+  Dropdown,
+  Input,
+} from "antd";
 import type { MenuProps } from "antd";
-import { GithubOutlined, QqOutlined, DiscordOutlined, TranslationOutlined, SunOutlined, MoonOutlined, CheckOutlined } from "@ant-design/icons";
+import {
+  GithubOutlined,
+  QqOutlined,
+  DiscordOutlined,
+  TranslationOutlined,
+  SunOutlined,
+  MoonOutlined,
+  CheckOutlined,
+} from "@ant-design/icons";
 import { useTheme } from "next-themes";
 import { useLocale } from "next-intl";
 import { AppMenu } from "@/app/components/projects";
@@ -49,13 +66,17 @@ export function Navigation() {
 
   const [current, setCurrent] = useState(pathname);
   const isChineseLocale = locale === "zh" || locale === "zh-hant";
-  const currentLanguage = LANGUAGES.find((l) => l.key === locale)?.label || "English";
+  const currentLanguage =
+    LANGUAGES.find((l) => l.key === locale)?.label || "English";
 
   // 语言筛选与布局计算（需放在 early return 之前，避免违反 Hooks 规则）
   const filteredLanguages = useMemo(() => {
     const q = langQuery.trim().toLowerCase();
     if (!q) return LANGUAGES as readonly { key: string; label: string }[];
-    return LANGUAGES.filter((l) => l.label.toLowerCase().includes(q) || l.key.toLowerCase().includes(q));
+    return LANGUAGES.filter(
+      (l) =>
+        l.label.toLowerCase().includes(q) || l.key.toLowerCase().includes(q)
+    );
   }, [langQuery]);
   const langGridCols = LANGUAGES.length > 16 ? 3 : 2;
   // 三列时适当加宽：按列数与单列最小宽度动态计算弹层宽度
@@ -64,7 +85,10 @@ export function Navigation() {
   const panelPadding = 16; // 外层 padding: 8 上下合计
   const langPanelWidth = Math.min(
     680, // 上限，防止过宽
-    Math.max(420, langGridCols * perColMin + (langGridCols - 1) * panelGap + panelPadding)
+    Math.max(
+      420,
+      langGridCols * perColMin + (langGridCols - 1) * panelGap + panelPadding
+    )
   );
 
   useEffect(() => {
@@ -73,7 +97,8 @@ export function Navigation() {
 
   if (!mounted) return null;
 
-  const handleThemeToggle = () => setTheme(theme === "light" ? "dark" : "light");
+  const handleThemeToggle = () =>
+    setTheme(theme === "light" ? "dark" : "light");
   const handleMenuClick: MenuProps["onClick"] = (e) => setCurrent(e.key);
 
   const handleLanguageChange = (key: string) => {
@@ -91,7 +116,8 @@ export function Navigation() {
     color: theme === "light" ? token.colorText : token.colorTextLightSolid,
   });
 
-  const bgColor = theme === "light" ? token.colorBgContainer : token.colorBgLayout;
+  const bgColor =
+    theme === "light" ? token.colorBgContainer : token.colorBgLayout;
 
   return (
     <ConfigProvider
@@ -103,20 +129,25 @@ export function Navigation() {
             itemSelectedBg: "transparent",
           },
         },
-      }}>
+      }}
+    >
       <Header
         style={{
           padding: 4,
-          borderBottom: `1px solid ${theme === "light" ? token.colorBorderSecondary : token.colorBorder}`,
+          borderBottom: `1px solid ${
+            theme === "light" ? token.colorBorderSecondary : token.colorBorder
+          }`,
           backgroundColor: bgColor,
-        }}>
+        }}
+      >
         <div
           style={{
             display: "flex",
             justifyContent: "space-between",
             alignItems: "center",
             padding: `0 ${token.paddingLG}px`,
-          }}>
+          }}
+        >
           <Menu
             onClick={handleMenuClick}
             selectedKeys={[current]}
@@ -146,9 +177,17 @@ export function Navigation() {
                     padding: 8,
                     background: bgColor,
                     borderRadius: 8,
-                    boxShadow: theme === "light" ? token.boxShadowSecondary : token.boxShadow,
-                    border: `1px solid ${theme === "light" ? token.colorBorderSecondary : token.colorBorder}`,
-                  }}>
+                    boxShadow:
+                      theme === "light"
+                        ? token.boxShadowSecondary
+                        : token.boxShadow,
+                    border: `1px solid ${
+                      theme === "light"
+                        ? token.colorBorderSecondary
+                        : token.colorBorder
+                    }`,
+                  }}
+                >
                   <Input
                     allowClear
                     size="small"
@@ -168,7 +207,8 @@ export function Navigation() {
                       gridTemplateColumns: `repeat(${langGridCols}, minmax(${perColMin}px, 1fr))`,
                       gap: 6,
                       paddingBottom: 4,
-                    }}>
+                    }}
+                  >
                     {filteredLanguages.map((lang) => {
                       const selected = lang.key === locale;
                       return (
@@ -185,35 +225,54 @@ export function Navigation() {
                           onClick={() => {
                             handleLanguageChange(lang.key);
                             setLangOpen(false);
-                          }}>
-                          <span style={{ overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+                          }}
+                        >
+                          <span
+                            style={{
+                              overflow: "hidden",
+                              textOverflow: "ellipsis",
+                              whiteSpace: "nowrap",
+                            }}
+                          >
                             {lang.label}
-                            <span style={{ opacity: 0.7, marginLeft: 6 }}>({lang.key})</span>
+                            <span style={{ opacity: 0.7, marginLeft: 6 }}>
+                              ({lang.key})
+                            </span>
                           </span>
                           {selected && <CheckOutlined />}
                         </Button>
                       );
                     })}
-                    {filteredLanguages.length === 0 && <div style={{ padding: 8, color: token.colorTextSecondary }}>No match</div>}
+                    {filteredLanguages.length === 0 && (
+                      <div
+                        style={{ padding: 8, color: token.colorTextSecondary }}
+                      >
+                        No match
+                      </div>
+                    )}
                   </div>
                 </div>
               )}
-              placement="bottomRight">
+              placement="bottomRight"
+            >
               <Button type="text" icon={<TranslationOutlined />}>
                 {currentLanguage}
               </Button>
             </Dropdown>
 
             <Space size={token.marginXS}>
-              {isChineseLocale && (
-                <a href={SOCIAL_LINKS.qq} target="_blank" rel="noopener noreferrer">
-                  <QqOutlined style={getSocialIconStyle()} />
-                </a>
-              )}
-              <a href={SOCIAL_LINKS.discord} target="_blank" rel="noopener noreferrer">
+              <a
+                href={SOCIAL_LINKS.discord}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 <DiscordOutlined style={getSocialIconStyle()} />
               </a>
-              <a href={SOCIAL_LINKS.github} target="_blank" rel="noopener noreferrer">
+              <a
+                href={SOCIAL_LINKS.github}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 <GithubOutlined style={getSocialIconStyle()} />
               </a>
             </Space>
